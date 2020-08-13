@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  db:
+    image: trinitycore-dataserver
+    build:
+      context: ./dataserver
+    env_file:
+      - trinity-variables.env
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    secrets:
+      - mysql_root_password_file
+      - mysql_pass_file
+    tty: true
+  authserver:
+    image: trinitycore-authserver
+    build:
+      context: ./authserver
+    ports:
+      - "3724:3724/tcp"
+    env_file:
+      - trinity-variables.env
+    secrets:
+      - mysql_root_password_file
+      - mysql_pass_file
+    tty: true
+  worldserver:
+    image: trinitycore-worldserver
+    build:
+      context: ./worldserver
+    ports:
+      - "3443:3443/tcp"
+      - "8085:8085/tcp"
+    env_file:
+      - trinity-variables.env
+    secrets:
+      - mysql_root_password_file
+      - mysql_pass_file
+    volumes:
+      - trinitycore-data:/usr/local/data
+    tty: true
+volumes:
+  trinitycore-data:
+    external: true
+  mysql-data:
+secrets:
+  mysql_root_password_file:
+    file: ./creds/mysql_root_password.cred
+  mysql_pass_file:
+    file: ./creds/mysql_pass.cred
