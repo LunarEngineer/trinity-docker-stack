@@ -54,7 +54,7 @@ sed 's|^Updates.EnableDatabases *= *[[:digit:]]|Updates.EnableDatabases = 0|g; \
      s|^Console.Enable *= *[[:digit:]]|Console.Enable = 0|g; \
      s|^LogsDir *= *""|LogsDir = "'${TRINITYCORE_LOG_DIR}'"|g; \
      s|^Ra.Enable *= *[[:digit:]]|Ra.Enable = 1|g;' \
-     "${TRINITYCORE_INSTALL_PREFIX}/etc/wowrldserver.conf.dist" > "${TRINITYCORE_INSTALL_PREFIX}/etc/worldserver.conf" && \
+     "${TRINITYCORE_INSTALL_PREFIX}/etc/worldserver.conf.dist" > "${TRINITYCORE_INSTALL_PREFIX}/etc/worldserver.conf" && \
 # remove the dependencies
 apt-get purge -y \
     clang \
